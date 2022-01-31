@@ -38,7 +38,7 @@ class HomeComponent extends Component
     }
     public function loadIdea( $idea)
     {
-        $this->idea = idea::where('id', $idea)->first();
+        $this->idea = Idea::where('id', $idea)->first();
         $this->state = $this->idea->toArray();
     }
     public function addIdea()
@@ -96,7 +96,7 @@ class HomeComponent extends Component
 
     public function render()
     {
-        $ideas = idea::with('user', 'category')
+        $ideas = Idea::with('user', 'category')
             ->when($this->category, function($query){
                 return $query->where('category_id', $this->category);
             })

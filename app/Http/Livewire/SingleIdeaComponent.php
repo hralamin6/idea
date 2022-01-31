@@ -25,14 +25,14 @@ class SingleIdeaComponent extends Component
     protected $listeners = ['changedStatus' => 'changedStatus', 'deleteIdea', 'deleteComment'];
     public $state=[];
 
-    public function mount(idea $idea)
+    public function mount(Idea $idea)
     {
         $this->idea = $idea;
         $this->status = $this->idea->status;
         $this->state = $this->idea->toArray();
         $this->votes_count = $this->idea->votes()->count();
     }
-    public function deleteIdea(idea $idea)
+    public function deleteIdea(Idea $idea)
     {
         $idea->delete();
         $this->alert('success', 'Successfully deleted');
@@ -44,7 +44,7 @@ class SingleIdeaComponent extends Component
         $this->alert('success', 'Successfully deleted');
     }
 
-    public function vote(idea $idea)
+    public function vote(Idea $idea)
     {
         if (!Auth::check()){
             return redirect()->route('login');

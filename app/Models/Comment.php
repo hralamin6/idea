@@ -16,7 +16,7 @@ class Comment extends Model
     }
     public function idea()
     {
-        return $this->belongsTo(idea::class)->withDefault();
+        return $this->belongsTo(Idea::class)->withDefault();
     }
 
 }

@@ -2,10 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class IdeaFactory extends Factory
 {
@@ -24,7 +21,6 @@ class IdeaFactory extends Factory
             'user_id'=> $this->faker->numberBetween(1, 50),
             'title'=> $title,
             'status'=> $status,
-//            'slug'=> Str::slug($title),
             'description'=> $this->faker->paragraph(5),
         ];
     }

@@ -19,7 +19,7 @@ public $idea;
      */
     public function __construct($idea)
     {
-        $this->idea = idea::with('user', 'category')->where('id', $idea)->first();
+        $this->idea = Idea::with('user', 'category')->where('id', $idea)->first();
     }
 
     /**

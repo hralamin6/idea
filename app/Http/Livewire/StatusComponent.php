@@ -11,7 +11,7 @@ public $allIdea, $considering, $count;
 
     public function render()
     {
-        $this->count = idea::query()
+        $this->count = Idea::query()
             ->selectRaw("count(*) as all_statuses")
             ->selectRaw("count(case when status = 'open' then 'open' end) as open")
             ->selectRaw("count(case when status = 'considering' then 'considering' end) as considering")
@@ -20,9 +20,6 @@ public $allIdea, $considering, $count;
             ->selectRaw("count(case when status = 'closed' then 'closed' end) as closed")
             ->first()
             ->toArray();
-//        $this->allIdea = \App\Models\idea::count();
-//        $this->considering = \App\Models\idea::whereStatus('considering')->count();
-
         return view('livewire.status-component');
     }
 }

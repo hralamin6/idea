@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public function ideas()
     {
-        return $this->hasMany(idea::class);
+        return $this->hasMany(Idea::class);
     }
     public function commtents()
     {
@@ -52,7 +52,7 @@ class User extends Authenticatable
     }
     public function votes()
     {
-        return $this->belongsToMany(idea::class, 'votes');
+        return $this->belongsToMany(Idea::class, 'votes');
     }
     public function getAvatar()
     {

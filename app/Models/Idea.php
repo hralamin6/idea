@@ -6,7 +6,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class idea extends Model
+class Idea extends Model
 {
     use HasFactory, Sluggable;
     protected $guarded = [];
