@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Mail\IdeaStatusChangedMail;
 use App\Models\Comment;
-use App\Models\idea;
+use App\Models\Idea;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;

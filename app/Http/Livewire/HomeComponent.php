@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Category;
-use App\Models\idea;
+use App\Models\Idea;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;

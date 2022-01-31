@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\idea;
+use App\Models\Idea;
 use Livewire\Component;
 
 class StatusComponent extends Component
