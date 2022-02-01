@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Traits\WithAuthRedirects;
 use App\Mail\IdeaStatusChangedMail;
 use App\Models\Comment;
 use App\Models\Idea;
+use App\Notifications\CommentAddedNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +16,7 @@ use Livewire\WithPagination;
 
 class SingleIdeaComponent extends Component
 {
-    use WithPagination;
+    use WithPagination, WithAuthRedirects;
     use LivewireAlert;
     public $status;
     public $idea;
@@ -30,6 +32,11 @@ class SingleIdeaComponent extends Component
         $this->idea = $idea;
         $this->status = $this->idea->status;
         $this->state = $this->idea->toArray();
+        $this->voteCount();
+    }
+
+    public function voteCount()
+    {
         $this->votes_count = $this->idea->votes()->count();
     }
     public function deleteIdea(Idea $idea)
@@ -47,7 +54,7 @@ class SingleIdeaComponent extends Component
     public function vote(Idea $idea)
     {
         if (!Auth::check()){
-            return redirect()->route('login');
+            return $this->redirectToLogin();
         }
         if ($idea->isVotedByUser(Auth::user())!=true){
             $idea->votes()->attach(Auth::id());
@@ -56,6 +63,7 @@ class SingleIdeaComponent extends Component
             $idea->votes()->detach(Auth::id());
             $this->alert('success', 'Unvoted');
         }
+        $this->voteCount();
     }
     public function addIdea()
     {
@@ -74,19 +82,21 @@ class SingleIdeaComponent extends Component
     public function addComment()
     {
         if (!\auth()->check()){
-            return redirect()->route('login');
+            return $this->redirectToLogin();
         }
        $this->validate(
             [
                 'comment' => 'required|max:111',
             ]);
-        $this->idea->comments()->create([
+       $comment =  $this->idea->comments()->create([
             'user_id' => \auth()->id(),
             'body' => $this->comment,
         ]);
+        $this->idea->user->notify(new CommentAddedNotification($comment));
         $this->reset('comment');
-        $this->goToPage($this->idea->comments()->paginate(5)->lastPage());
-        $this->emit('commendAdded');
+        $this->goToPage($this->idea->comments()->paginate()->lastPage());
+        $this->emit('commendAdded', ['commentId' => $comment->id]);
+//        $this->dispatchBrowserEvent('commendAdded', ['commentId' => $comment->id]);
         $this->alert('success', 'Successfully updated');
     }
 
@@ -113,7 +123,7 @@ class SingleIdeaComponent extends Component
     {
         $backUrl = url()->previous() != url()->full()? url()->previous(): route('home');
         $this->isVoted = $this->idea->isVotedByUser(Auth::user());
-        $comments = $this->idea->comments()->with(['user'])->paginate(5)->withQueryString();
+        $comments = $this->idea->comments()->with(['user'])->paginate()->withQueryString();
         return view('livewire.single-idea-component', compact('backUrl', 'comments'));
     }
 }

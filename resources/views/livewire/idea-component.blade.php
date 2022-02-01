@@ -61,13 +61,13 @@
             </form>
         @else
             <div class="my-6 text-center flex justify-between gap-4">
-                <a href="{{route('login')}}"
+                <a wire:click.prevent="redirectToLogin" href="{{route('login')}}"
                    type="submit"
                    class="flex btn-sm items-center justify-center w-1/2 h-9 text-xs bg-blue-600 text-white font-semibold rounded-xl border border-blue-600 hover:bg-blue-hover transition duration-150 ease-in px-6 py-3"
                 >
                     <span class="ml-1 capitalize">login</span>
                 </a>
-                <a href="{{route('register')}}"
+                <a wire:click.prevent="redirectToLogin" href="{{route('register')}}"
                    type="submit"
                    class="flex btn-sm items-center justify-center w-1/2 h-9 text-xs bg-blue-600 text-white font-semibold rounded-xl border border-blue-600 hover:bg-blue-hover transition duration-150 ease-in px-6 py-3"
                 >

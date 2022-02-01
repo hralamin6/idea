@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Traits\WithAuthRedirects;
 use App\Models\Category;
 use App\Models\Idea;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,13 +10,14 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
+use iqbalhasandev\bulksmsbd\Classes\BulkSMSBD;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class HomeComponent extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, WithAuthRedirects;
     use WithPagination;
     public $category, $status, $search, $filter;
     protected $queryString = [
@@ -69,8 +71,7 @@ class HomeComponent extends Component
     public function vote(idea $idea)
     {
         if (!Auth::check()){
-            return redirect()->route('login');
-        }
+            return $this->redirectToLogin();        }
         if ($idea->isVotedByUser(Auth::user())!=true){
             $idea->votes()->attach(Auth::id());
             $this->alert('success', 'Voted');

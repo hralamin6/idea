@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<html  lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,9 +13,12 @@
     <link rel="shortcut icon" href="{{ url(asset('favicon.ico')) }}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     @livewireStyles
+
     <script src="{{asset('js/app.js')}}" defer></script>
+{{--    <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>--}}
+{{--    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>--}}
 {{--    <script src="{{asset('js/init-alpine.js')}}"></script>--}}
-    <script src="https://cdn.jsdelivr.net/npm/theme-change@1.2.0/dist/select.js"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/theme-change@1.2.0/dist/select.js"></script>--}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="darks" data-theme="light">

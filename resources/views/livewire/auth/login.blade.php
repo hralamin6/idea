@@ -72,7 +72,7 @@
                             Sign in
                         </button>
                     </span>
-                   <button x-show="open"  x-on:click="$wire.set('email', 'hralamin2020@gmail.com'), $wire.set('password', 'password')" class="my-6 mx-auto text-purple-600 bg-base-100">Admin</button>
+                   <button  x-on:click="$wire.set('email', 'hralamin2020@gmail.com'); $wire.set('password', 'password'); $wire.authenticate();" class="my-6 mx-auto text-purple-600 bg-base-100">Admin</button>
                 </div>
             </form>
         </div>

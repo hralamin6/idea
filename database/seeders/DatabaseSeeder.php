@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 //        User::factory(19)->create();
         User::factory(50)->create();
         Category::factory(20)->create();
-        Idea::factory(100)->create();
+        \App\Models\Idea::factory(100)->create();
 
         foreach (range(1, 100) as $idea_id){
             foreach (range(rand(1, 20), rand(1, 20)) as $user_id) {

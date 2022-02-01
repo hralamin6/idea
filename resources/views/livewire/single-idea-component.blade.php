@@ -187,26 +187,27 @@ Swal.fire({
         <div class="flex flex-col md:flex-row items-center space-x-4 md:ml-6">
             <div
                 x-data="{ isOpen: false, lastComment: null, comments: null }"
-                x-init="$wire.on('commendAdded', () => { isOpen = false;
-comments = document.querySelectorAll('.comment-container')
-    lastComment = comments[comments.length - 1]
-    lastComment.scrollIntoView({behavior: 'smooth'})
-                })"
-
-                class="relative"
-            >
-                <button
-                    type="button"
-                    @click="
-            isOpen = !isOpen
+                x-init="$wire.on('commendAdded', (event) => {
+            isOpen = false,
+            comment = document.getElementById(event.commentId)
+            comment.scrollIntoView({behavior: 'smooth'})
+            comment.classList.add('bg-green-100')
+            setTimeout(() => {
+                comment.classList.remove('bg-green-100')
+            }, 5000)
+            })
+@if (session('scrollToComment'))
+                    const commentToScrollTo = document.getElementById({{session('scrollToComment')}})
+            commentToScrollTo.scrollIntoView({ behavior: 'smooth'})
+            commentToScrollTo.classList.add('bg-green-100')
+            setTimeout(() => {
+                commentToScrollTo.classList.remove('bg-green-100')
+            }, 5000)
+        @endif" class="relative">
+                <button type="button" @click=" isOpen = !isOpen
             if (isOpen) {
                 $nextTick(() => $refs.comment.focus())
-            }
-        "
-                    class="flex items-center justify-center h-11 w-32 text-sm bg-blue-600 text-white font-semibold rounded-xl border border-blue-600 hover:bg-blue-hover transition duration-150 ease-in px-6 py-3"
-                >
-                    Reply
-                </button>
+            } " class="flex items-center justify-center h-11 w-32 text-sm bg-blue-600 text-white font-semibold rounded-xl border border-blue-600 hover:bg-blue-hover transition duration-150 ease-in px-6 py-3">Reply</button>
                 <div
                     class="absolute z-10 w-64 md:w-104 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2"
                     x-cloak
@@ -347,7 +348,7 @@ comments = document.querySelectorAll('.comment-container')
 
     <div class="comments-container relative space-y-6 md:ml-22 pt-4 my-8 mt-1">
         @forelse($comments as $comment)
-        <div class="comment-container relative bg-white rounded-xl flex mt-4">
+        <div id="{{$comment->id}}" class="comment-container relative bg-white rounded-xl flex transition duration-1000 ease-in mt-4">
             <div class="flex flex-col md:flex-row flex-1 px-4 py-6">
                 <div class="flex-none">
                     <a href="#">
@@ -446,3 +447,25 @@ comments = document.querySelectorAll('.comment-container')
 
 
 </div>
+@push('js')
+    <script>
+        @if (session('scrollToComment'))
+        alert(session('scrollToComment'))
+        const commentToScrollTo = document.getElementById({{ session('scrollToComment') }})
+        commentToScrollTo.scrollIntoView({ behavior: 'smooth'})
+        commentToScrollTo.classList.add('bg-green-50')
+        setTimeout(() => {
+            commentToScrollTo.classList.remove('bg-green-50')
+        }, 5000)
+        @endif
+        window.addEventListener('commendAdded', event => {
+            console.log(event.detail.commentId)
+           let comment = document.getElementById(event.detail.commentId)
+            comment.scrollIntoView({behavior: 'smooth'})
+            comment.classList.add('bg-green-100')
+            setTimeout(() => {
+                comment.classList.remove('bg-green-100')
+            }, 5000)
+        })
+    </script>
+@endpush

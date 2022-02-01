@@ -80,6 +80,14 @@
                         </button>
                     </span>
                 </div>
+                <div class="mt-6" x-data>
+                    <span class="block w-full rounded-md shadow-sm">
+                        <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                            Sign in
+                        </button>
+                    </span>
+                    <button  x-on:click="$wire.set('email', 'user@gmail.com'); $wire.set('name', 'Custom User'); $wire.set('passwordConfirmation', 'password'); $wire.set('password', 'password'); $wire.register();" class="my-6 mx-auto text-purple-600 bg-base-100">Create Fake User</button>
+                </div>
             </form>
         </div>
     </div>

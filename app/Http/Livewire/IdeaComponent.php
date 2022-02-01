@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Traits\WithAuthRedirects;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -9,7 +10,7 @@ use Livewire\Component;
 
 class IdeaComponent extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, WithAuthRedirects;
 
     public $title, $description, $status='open', $category_id;
 
